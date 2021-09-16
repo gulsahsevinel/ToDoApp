@@ -14,10 +14,18 @@
         android:id="@+id/detailFragment"
         android:name="com.gulsah.todolist.view.DetailFragment"
         android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" />
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="item"
+            app:argType="com.gulsah.todolist.entity.ToDoItem" />
+    </fragment>
     <fragment
         android:id="@+id/homepageFragment"
         android:name="com.gulsah.todolist.view.HomepageFragment"
         android:label="fragment_homepage"
-        tools:layout="@layout/fragment_homepage" />
+        tools:layout="@layout/fragment_homepage" >
+        <action
+            android:id="@+id/transaction"
+            app:destination="@id/detailFragment" />
+    </fragment>
 </navigation>

@@ -18,7 +18,7 @@ class ToDoDaoRepository(var application: Application) {
         todoList = MutableLiveData()
     }
 
-    fun returnToDos() : MutableLiveData<List<ToDoItem>>{
+    fun returnToDos(): MutableLiveData<List<ToDoItem>> {
         return todoList
     }
 
@@ -27,4 +27,32 @@ class ToDoDaoRepository(var application: Application) {
             todoList.value = db.ToDoItemDao().allToDos()
         }
     }
+
+    fun addNewToDo(item: ToDoItem) {
+        val job: Job = CoroutineScope(Dispatchers.Main).launch {
+            db.ToDoItemDao().todoAdd(item)
+        }
+    }
+
+    fun deleteToDo(item: ToDoItem) {
+        val job: Job = CoroutineScope(Dispatchers.Main).launch {
+            db.ToDoItemDao().todoDelete(item)
+            getAllToDos()
+        }
+    }
+
+    fun update(item: ToDoItem) {
+        val job: Job = CoroutineScope(Dispatchers.Main).launch {
+            db.ToDoItemDao().todoUpdate(item)
+            getAllToDos()
+        }
+    }
+
+    fun searchToDo(q: String) {
+        val job: Job = CoroutineScope(Dispatchers.Main).launch {
+            todoList.value = db.ToDoItemDao().todoSearch(q)
+        }
+    }
+
+
 }

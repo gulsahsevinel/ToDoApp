@@ -1,13 +1,18 @@
 package com.gulsah.todolist.adapter
 
+import android.content.Context
+import android.graphics.Paint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.gulsah.todolist.databinding.RowTodoItemBinding
 import com.gulsah.todolist.entity.ToDoItem
 
-class ToDoAdapter(var todoList: List<ToDoItem>) :
+class ToDoAdapter(var todoList: List<ToDoItem>, var mContext: Context) :
     RecyclerView.Adapter<ToDoAdapter.CardViewHolder>() {
+
 
     inner class CardViewHolder(rowTodoItemBinding: RowTodoItemBinding) :
         RecyclerView.ViewHolder(rowTodoItemBinding.root) {
@@ -26,11 +31,19 @@ class ToDoAdapter(var todoList: List<ToDoItem>) :
 
     override fun onBindViewHolder(holder: CardViewHolder, position: Int) {
         val item = todoList[position]
-        holder.rowTodoItemBinding.item = item
 
         holder.rowTodoItemBinding.todoItemTextView.text = item.todo_item
 
+            if (holder.rowTodoItemBinding.checkBox.isChecked) {
+
+                Toast.makeText(mContext, "Checked", Toast.LENGTH_LONG).show()
+                holder.rowTodoItemBinding.todoItemTextView.apply {
+                    paintFlags = paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                }
+            }
+        holder.rowTodoItemBinding.item = item
     }
+
 
     override fun getItemCount(): Int {
         return todoList.size
@@ -38,3 +51,4 @@ class ToDoAdapter(var todoList: List<ToDoItem>) :
 
 
 }
+

@@ -19,4 +19,12 @@ class HomepageViewModel(application: Application) : AndroidViewModel(application
     fun todosLoad(){
         repo.getAllToDos()
     }
+
+    fun deleteItem(item : ToDoItem){
+        repo.deleteToDo(item)
+    }
+
+    fun search(query : String){
+        repo.searchToDo(query)
+    }
 }
